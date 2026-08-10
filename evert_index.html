@@ -94,6 +94,7 @@
         @media(max-width:600px){.app{padding:16px 12px 24px;border-radius:24px}.header-info .prize-name{font-size:1.3rem}.numbers-grid{grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:8px}.admin-grid{grid-template-columns:1fr}.whatsapp-area{flex-direction:column;align-items:stretch;text-align:center;padding:16px}.btn-whatsapp{justify-content:center}.seccion-logo{height:60px}.seccion-articulo{min-height:220px}.articulo-imagen{min-height:150px}.info-grid{grid-template-columns:repeat(3,1fr);gap:4px}.info-value{font-size:.75rem}.articulo-info h2{font-size:1.1rem}}
     </style>
 </head>
+/*..................................................*/
 <body>
     <div id="toast" class="toast">✅ Mensaje</div>
     <div class="app" id="app">
@@ -299,6 +300,7 @@
                 whatsappBtn.disabled = totalSelected === 0;
             }
 
+        /*......................................................*/    
             function handleNumberClick(num) {
                 if (sold.includes(num)) return;
                 const idx = selected.indexOf(num);

@@ -572,5 +572,91 @@
             init();
         })();
     </script>
+// ============================================================
+// TICKETS PARA WHATSAPP - AGREGADO
+// ============================================================
+const ADMIN = '3016767680';
+function obtenerPuestosSeleccionados() {
+    // Intenta encontrar la variable
+    if (typeof seleccionados !== 'undefined') return seleccionados;
+    if (typeof puestosSeleccionados !== 'undefined') return puestosSeleccionados;
+    if (typeof selectedPuestos !== 'undefined') return selectedPuestos;
+    // Si nada funciona, pregunta al usuario
+    alert('⚠️ No encontré los puestos seleccionados. ¿Cómo se llama tu variable?');
+    return [];
+}
+
+function enviarTickets() {
+    const nombre = document.getElementById('nombreComprador')?.value || 
+                   document.getElementById('nombre')?.value || 
+                   'Cliente';
+    const telefono = document.getElementById('telefonoComprador')?.value || 
+                     document.getElementById('telefono')?.value || 
+                     '';
+    const puestosSel = obtenerPuestosSeleccionados();
+    const total = puestosSel.length * 50000;
+
+    if (!telefono || telefono.length < 10) {
+        alert('⚠️ Escribe un número de teléfono válido (ej: 3215581908)');
+        return;
+    }
+
+    if (puestosSel.length === 0) {
+        alert('⚠️ Selecciona al menos un puesto');
+        return;
+    }
+
+    const ticketComprador = `
+🧾 *CONFIRMACIÓN DE COMPRA*
+═══════════════════════════════════════
+🎟️ Rifa: CHONTICO
+🏆 Premio: GRAN PREMIO
+───────────────────────────────────────
+📦 Puestos: ${puestosSel.join(', ')}
+💰 Total: $${total.toLocaleString('es-CO')}
+───────────────────────────────────────
+👤 Comprador: ${nombre}
+📱 Teléfono: ${telefono}
+📅 ${new Date().toLocaleString('es-CO')}
+═══════════════════════════════════════
+✅ Guarda este ticket como comprobante
+`;
+
+    const ticketAdmin = `
+📦 *NUEVA COMPRA - RIFA CHONTICO*
+═══════════════════════════════════════
+🎟️ Puestos: ${puestosSel.join(', ')}
+💰 Total: $${total.toLocaleString('es-CO')}
+───────────────────────────────────────
+👤 Comprador: ${nombre}
+📱 Teléfono: ${telefono}
+📅 ${new Date().toLocaleString('es-CO')}
+═══════════════════════════════════════
+✅ Ticket enviado al comprador
+`;
+
+    // Enviar al comprador
+    window.open(`https://wa.me/57${telefono}?text=${encodeURIComponent(ticketComprador)}`, '_blank');
+    
+    // Enviar al admin
+    window.open(`https://wa.me/57${ADMIN}?text=${encodeURIComponent(ticketAdmin)}`, '_blank');
+
+    alert('✅ Tickets enviados a tu WhatsApp y al administrador');
+}
+
+// Conectar al botón RESERVAR
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('button[onclick*="reservar"]') || 
+                document.querySelector('button:contains("RESERVAR")') ||
+                document.getElementById('btnReservar');
+    if (btn) {
+        const originalClick = btn.onclick;
+        btn.onclick = function(e) {
+            if (originalClick) originalClick(e);
+            setTimeout(enviarTickets, 500);
+        };
+    }
+});
+</script>    
 </body>
 </html>
