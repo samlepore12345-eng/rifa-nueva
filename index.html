@@ -918,12 +918,10 @@ const logoImage = document.getElementById('logoImage');
                     imagenPlaceholder.style.display = 'none';
                     configNueva.imagenPremioURL = row.imagen_premio_url;
                 }
-                if (row.logo_url) {
-                    logoImage.src = row.logo_url;
-                    logoImage.style.display = 'block';
-                    logoPlaceholder.style.display = 'none';
-                    configNueva.logoURL = row.logo_url;
-                }
+                if (row.logo_url && row.logo_url.trim() !== '') {
+    logoImage.src = row.logo_url;
+}
+
                 if (row.descripcion) {
                     premioDescripcion.textContent = row.descripcion;
                     configNueva.reglas = row.descripcion;
